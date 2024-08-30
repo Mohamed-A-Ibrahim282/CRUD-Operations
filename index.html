@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronics store</title>
+    <link rel="icon" href="img/online-shop.png">
+
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg  fixed-top shadow-sm">
+        <div class="container-fluid d-flex justify-content-start">
+            <h1 contenteditable data-heading="Frozen">
+                Electronics store
+            </h1>
+        </div>
+    </nav>
+
+    <div class="container pt-5">
+
+        <!-- Add product -->
+        <div class="row justify-content-between">
+
+            <!-- Search -->
+            <div class="col-lg-10 mb-4">
+                <input oninput="searchProduct(this.value)" type="search" placeholder="Search product..."
+                    class="form-control ">
+            </div>
+
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary fw-semibold w-100" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    <i class="fa-solid fa-plus"></i> Add Product
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">Product information</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            onclick="closeBtn()"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div>
+                            <label for="productName" class="form-label">Product Name :</label>
+                            <input oninput="nameValidation(this.value)" id="productName" type="text"
+                                class="form-control" placeholder="Enter product name...">
+                            <p class="NameValidation"></p>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="productCategory" class="form-label">Product Category :</label>
+                            <select id="productCategory" class="form-select">
+                                <option disabled selected>product category</option>
+                                <option value="Mobile" onclick="categoryValidation(this.value)">Mobile</option>
+                                <option value="Laptop" onclick="categoryValidation(this.value)">Laptop</option>
+                                <option value="TV" onclick="categoryValidation(this.value)">TV</option>
+                            </select>
+                            <p class="CategoryValidation"></p>
+                        </div>
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-sm">
+                                <label for="productPrice" class="form-label">Product Price :</label>
+                                <input oninput="priceValidation(this.value)" id="productPrice" type="number"
+                                    class="form-control" placeholder="Enter product price...">
+                                <p class="PriceValidation"></p>
+                            </div>
+
+                            <div class="col-sm">
+                                <label for="productRating" class="form-label">Product Rating :</label>
+                                <select id="productRating" class="form-select">
+                                    <option disabled selected>product rating</option>
+                                    <option value="1" onclick="ratingValidation(this.value)">1</option>
+                                    <option value="2" onclick="ratingValidation(this.value)">2</option>
+                                    <option value="3" onclick="ratingValidation(this.value)">3</option>
+                                    <option value="4" onclick="ratingValidation(this.value)">4</option>
+                                    <option value="5" onclick="ratingValidation(this.value)">5</option>
+                                </select>
+                                <p class="ratingValidation"></p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3 my-3">
+                            <div class="col-sm">
+                                <label for="productSales" class="form-label">Product Sales :</label>
+                                <input oninput="salesValidation(this.value)" id="productSales" type="text"
+                                    class="form-control" placeholder="Enter product sales...">
+                                <p class="salesValidation"></p>
+                            </div>
+
+                            <div class="col-sm">
+                                <label for="productRevenue" class="form-label">Product Revenue :</label>
+                                <input oninput="revenueValidation(this.value)" id="productRevenue" type="text"
+                                    class="form-control" placeholder="Enter product revenue...">
+                                <p class="revenueValidation"></p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="productImage">Product Image:</label>
+                            <input type="file" accept="image/*" name="image" id="productImage" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button onclick="closeBtn()" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Close</button>
+
+                        <button onclick="addProduct()" class="btn btn-primary d-block" id="addBtn">Add product</button>
+
+                        <button onclick="saveUpdate()" class="btn btn-warning d-none" data-bs-dismiss="modal"
+                            id="updateBtn">Update
+                            product</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="pt-4">
+            <table class="table table-striped">
+                <thead>
+                    <th class="ps-4">ID</th>
+                    <th>PRODUCT</th>
+                    <th>NAME</th>
+                    <th>CATEGORY</th>
+                    <th>PRICE</th>
+                    <th>RATING</th>
+                    <th>SALES</th>
+                    <th>REVENUE</th>
+                    <th>UPDATE</th>
+                    <th>PREVIEW</th>
+                    <th>DELETE</th>
+                </thead>
+
+                <tbody id="tbody">
+
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- Preview -->
+
+        <div
+            class="layer d-none bg-black bg-opacity-75 position-absolute top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center">
+
+            <div class="col-lg-4 h-50 rounded-3 bg-white d-flex flex-column align-items-center position-relative py-2">
+                <i class="fa-regular fa-circle-xmark position-absolute fa-xl"></i>
+                <h4 class="caption text-black"></h4>
+                <div class="line"></div>
+                <img src="" class="w-50 my-auto rounded-3">
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
